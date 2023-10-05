@@ -2,10 +2,9 @@ package com.mindhub.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity  // Crea una tabla en la base de datos con esa clase
 public class Client {
@@ -16,20 +15,21 @@ public class Client {
     @GenericGenerator( name = "native", strategy = "native" )
     private Long id;
     private String firstName, lastName, email;
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER) //relacion muchos a uno ->(Eager) que me traiga cuenta y propietario
+    private Set<Account> accounts = new HashSet<>(); //Set java.util
+
 
     // Constructores
-
     public Client() {
     }
-
     public Client(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    // Metodos o comportamientos
 
+    // Metodos o comportamientos
     public Long getId() {
         return id;
     }
@@ -56,5 +56,14 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void addAccount(Account account){
+        account.setClient(this);
+        accounts.add(account);
     }
 }
