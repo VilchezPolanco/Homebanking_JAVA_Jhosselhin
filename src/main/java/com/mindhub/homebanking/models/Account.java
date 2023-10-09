@@ -18,13 +18,14 @@ public class Account {
     private LocalDate creationDate;
     private Double balance;
     @ManyToOne(fetch = FetchType.EAGER) //relacion muchos a uno ->(Eager) que me traiga cuenta y propietario
-    @JoinColumn(name = "owner") //nombre en la tabla
+    @JoinColumn(name = "client_id") //nombre en la tabla
     private Client client;  // atributo para hacer una relacion con la clase Client
 
 
     //Constructores
     public Account() {
     }
+
     public Account(String number, LocalDate creationDate, Double balance) {
         this.number = number;
         this.creationDate = creationDate;

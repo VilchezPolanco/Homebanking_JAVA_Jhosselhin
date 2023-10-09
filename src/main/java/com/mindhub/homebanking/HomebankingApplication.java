@@ -31,6 +31,19 @@ public class HomebankingApplication {
 			Account accountMelba2 = new Account("VIN002",LocalDate.now().plusDays(1),7500.0);
 			client.addAccount(accountMelba2);
 			accountRepository.save(accountMelba2);
+
+
+
+			Client clientJhossy = new Client("Jhossy", "Vilchez", "jhossy@gmail.com");
+			clientRepository.save(clientJhossy);
+
+			Account accountJhossy1 = new Account("YES001", LocalDate.now(), 15000.0);
+			clientJhossy.addAccount(accountJhossy1);
+			accountRepository.save(accountJhossy1);
+
+			Account accountJhossy2 = new Account("YES002", LocalDate.now().plusDays(1), 8500.0);
+			clientJhossy.addAccount(accountJhossy2);
+			accountRepository.save(accountJhossy2);
 		};
 	}
 }

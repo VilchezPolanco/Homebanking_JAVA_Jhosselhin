@@ -16,8 +16,9 @@ import java.util.stream.Stream;
 @RestController //controlador escucha y responde peticiones
 @RequestMapping("/api")
 public class ClientController {
+
     @Autowired //injeccion de dependencias
-    public ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     @RequestMapping("/clients")
     public List<ClientDTO> getAllClients() {  //metodo
