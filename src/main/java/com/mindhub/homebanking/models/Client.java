@@ -14,10 +14,14 @@ public class Client {
     @GeneratedValue( strategy = GenerationType.AUTO, generator = "native" )
     @GenericGenerator( name = "native", strategy = "native" )
     private Long id;
+
     private String firstName, lastName, email;
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER) //relacion muchos a uno ->(Eager) que me traiga cuenta y propietario
     private Set<Account> accounts = new HashSet<>(); //Set java.util
 
+    // ---- One to many de Client to ClientLoan
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     // Constructores
     public Client() {
@@ -58,6 +62,14 @@ public class Client {
         this.email = email;
     }
 
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
+    }
+
     public Set<Account> getAccounts() {
         return accounts;
     }
@@ -65,5 +77,10 @@ public class Client {
     public void addAccount(Account account){
         account.setClient(this);
         accounts.add(account);
+    }
+
+    public void addClientLoan(ClientLoan clientLoan) {
+        clientLoan.setClient(this);
+        this.clientLoans.add(clientLoan);
     }
 }

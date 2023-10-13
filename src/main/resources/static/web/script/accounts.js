@@ -3,6 +3,7 @@ createApp({
   data() {
     return {
       clients: [],
+      /* accounts: [], */
     };
   },
   created() {
@@ -10,6 +11,7 @@ createApp({
       .then((response) => {
         this.clients = response.data;
         console.log(this.clients);
+        /* this.accounts = response.data.accounts; */
       })
       .catch((error) => {
         console.error(error);

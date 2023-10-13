@@ -1,12 +1,7 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -22,7 +18,11 @@ public class HomebankingApplication {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository){
+	public CommandLineRunner initData( ClientRepository clientRepository,
+									  AccountRepository accountRepository,
+									  TransactionRepository transactionRepository,
+									  LoanRepository loanRepository,
+									  ClientLoanRepository clientLoanRepository ){
 		return args ->{
 
 			//instanciar el objeto client y el objeto account
@@ -91,6 +91,40 @@ public class HomebankingApplication {
 			Transaction transactionJhossy4 = new Transaction(TransactionType.CREDIT, 15000.2, "coffe", LocalDateTime.now());
 			accountJhossy2.addTransaction( transactionJhossy4 );
 			transactionRepository.save( transactionJhossy4 );
+
+
+			// Crear tipos de loans
+			Loan mortgage = new Loan("Mortgage", 500000.00, List.of(12, 24, 36, 48, 60));
+			loanRepository.save(mortgage);
+
+			Loan personal = new Loan("Personal", 100000.00, List.of(6, 12, 24));
+			loanRepository.save(personal);
+
+			Loan car = new Loan("Car", 300000.00, List.of(6, 12, 24, 36));
+			loanRepository.save(car);
+
+
+			// Crear ClientLoan
+			ClientLoan mortgageMelba = new ClientLoan( 400000.00, 60);
+			client.addClientLoan(mortgageMelba);
+			mortgage.addClientLoan(mortgageMelba);
+			clientLoanRepository.save(mortgageMelba);
+
+			ClientLoan personalMelba = new ClientLoan( 50000.00, 12);
+			client.addClientLoan(personalMelba);
+			personal.addClientLoan(personalMelba);
+			clientLoanRepository.save(personalMelba);
+
+
+			ClientLoan personalClientJhossy = new ClientLoan(100000.00, 24);
+			clientJhossy.addClientLoan(personalClientJhossy);
+			personal.addClientLoan(personalClientJhossy);
+			clientLoanRepository.save(personalClientJhossy);
+
+			ClientLoan carClientJhossy = new ClientLoan(200000.00, 36);
+			clientJhossy.addClientLoan(carClientJhossy);
+			car.addClientLoan(carClientJhossy);
+			clientLoanRepository.save(carClientJhossy);
 
 		};
 	}
