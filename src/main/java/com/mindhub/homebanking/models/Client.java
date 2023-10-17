@@ -62,18 +62,24 @@ public class Client {
         this.email = email;
     }
 
+
     public Set<ClientLoan> getClientLoans() {
         return clientLoans;
-    }
-
-    public void setClientLoans(Set<ClientLoan> clientLoans) {
-        this.clientLoans = clientLoans;
     }
 
     public Set<Account> getAccounts() {
         return accounts;
     }
 
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    // Métodos para agregar cuentas y préstamos de cliente a este cliente
     public void addAccount(Account account){
         account.setClient(this);
         accounts.add(account);

@@ -1,0 +1,13 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.div_logo{
+    width: 15rem;
+}
+
+.div_logo img{
+    width: 100%;
+}

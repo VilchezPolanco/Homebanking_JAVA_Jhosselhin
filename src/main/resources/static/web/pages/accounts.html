@@ -1,41 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-  <title>Document</title>
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+  <title>Mindhub Brothers Bank</title>
+  <link rel="stylesheet" href="./accounts.html">
 </head>
 
 <body>
-  <main id="app" class="d-flex flex-column text-center ">
-    <h1 class="bg-body-secondary ">Welcome, {{ clients.firstName + " " + clients.lastName }}</h1>
-    <h4 class="text-danger p-2">Accounts</h4>
-    <div class="bg-danger-subtle " v-for="account of clients.accounts">
-      <div class="bg-body m-4">
-        <p>Account Number: #{{ account.number }}</p>
-        <h2>Account Balance: ${{ account.balance.toLocaleString() }}</h2>
-        <p>Creation Date: {{ account.creationDate }}</p>
-        <a :href="'./account.html?id=' + account.id" class="rounded rounded-1 bg-primary text-bg-light  ">transaction</a>
+  <header class="bg-dark text-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+          <a class="navbar-brand" href="#">
+              <img src="https://static.vecteezy.com/system/resources/thumbnails/013/948/616/small/bank-icon-logo-design-vector.jpg" alt="Logo" width="40" height="40">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                      <a class="nav-link" href="pagina1.html">Accounts</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="pagina2.html">Cards</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="pagina3.html">Loans</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="cerrar-sesion.html">
+                          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                      </a>
+                  </li>
+              </ul>
+          </div>
       </div>
+    </nav>
+  </header>
+  
+  <main id="app" class="container mt-4" style="min-height: 85vh;">
+
+    <h2 class="mx-5 mb-4">Welcome, {{ clients.firstName + "!"}}</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-4" v-for="account of clients.accounts">
+            <div class="card mb-4 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Account Number: {{  account.number }}</h5>
+                    <p class="card-text">Account Balance:</p>
+                    <h4 class="card-text text-center">${{ account.balance.toLocaleString() }}</h4>
+                    <p class="card-text mt-4">Creation Date: {{ account.creationDate }}</p>
+                    <a :href="'./account.html?id=' + account.id" class="btn btn-primary">Transaction</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div >
-      <h4 class="text-danger p-2 ">Loans</h4>
-      <div v-for="loan of clients.loans">
-        <!-- Información de los préstamos -->
-        <div v-if="clients.loans.length>=1">
-          <h4>{{ loan.loanName }}</h4>
-          <p>Amount: ${{loan.amount.toLocaleString()}}</p>
-          <p># Payments: {{loan.payments}}</p>
+
+    <div class="mt-4 text text-center">
+        <h4 class="p-2">Loans</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Loan Name</th>
+                    <th>Amount</th>
+                    <th># Payments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="loan in clients.loans">
+                    <td>{{ loan.loanName }}</td>
+                    <td>${{loan.amount.toLocaleString()}}</td>
+                    <td>{{loan.payments}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div v-if="clients.loans.length === 0">
+            <h2>${{clients.name}} does not have loans</h2>
         </div>
-        <div v-else>
-          <h2>${{clients.name}} does not have loans</h2>
-        </div>
+    </div>
+    <!-- Carousel -->
+    <div id="carouselExample" class="carousel slide mt-4 mb-2" data-bs-ride="carousel">
+      <div class="carousel-inner">
+          <div class="carousel-item active">
+              <img src="https://img.freepik.com/fotos-premium/vista-panoramica-familia-hijos-hijos-encuentra-uniendo-sus-manos-al-atardecer-vista-trasera_255755-3120.jpg?w=996" class="d-block w-100" style="max-height: 14rem; object-fit: cover; object-position:50% 28%;" alt="Image 1">
+          </div>
+          <div class="carousel-item">
+              <img src="https://cdn.create.vista.com/api/media/medium/276265648/stock-photo-panoramic-shot-happy-family-holding-hands-park-copy-space?token=" class="d-block w-100" style="max-height: 14rem; object-fit: cover; object-position:50% 28%;" alt="Image 2">
+          </div>
+          <div class="carousel-item">
+              <img src="https://cdn.create.vista.com/api/media/medium/405946350/stock-photo-panoramic-shot-family-daughter-hugging-car-beach?token=" class="d-block w-100" style="max-height: 14rem; object-fit: cover; object-position:50% 28%;"  alt="Image 3">
+          </div>
       </div>
+      <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+      </a>
     </div>
+
   </main>
+  <footer class="bg-dark text-light py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>&copy; 2023 - All rights reserved</p>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-unstyled list-inline text-md-end">
+                    <li class="list-inline-item"><a href="https://www.instagram.com/" class="text-light text-decoration-none">Instagram</a></li>
+                    <li class="list-inline-item"><a href="https://www.facebook.com/" class="text-light text-decoration-none">Facebook</a></li>
+                    <li class="list-inline-item"><a href="https://api.whatsapp.com/send?phone=TUNUMERO&text=TUMENSAJE" class="text-light text-decoration-none">WhatsApp</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

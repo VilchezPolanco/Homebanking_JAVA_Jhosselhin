@@ -31,7 +31,7 @@ public class Loan {
         this.payments = payments;
     }
 
-    // Getters y setters
+    // metodos
 
     public Long getID() {
         return ID;
@@ -71,6 +71,7 @@ public class Loan {
         this.payments = payments;
     }
 
+    // Método para agregar un préstamo de cliente a este tipo de préstamo
     public void addClientLoan(ClientLoan clientLoan) {
         clientLoan.setLoan(this);
         this.clientLoans.add(clientLoan);

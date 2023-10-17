@@ -1,11 +1,8 @@
 package com.mindhub.homebanking.dtos;
 
-import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.ClientLoan;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ClientDTO {
@@ -14,20 +11,21 @@ public class ClientDTO {
     private String lastName;
     private String email;
     private List<AccountDTO> accounts;
-    private Set<ClientLoanDTO> loans;
+    private List<ClientLoanDTO> loans;
 
     //constructor
     public ClientDTO(Client client) {
-        id = client.getId();
-        firstName = client.getFirstName();
-        lastName = client.getLastName();
-        email = client.getEmail();
-        accounts = client       //obj del tipo cliente
+        this.id = client.getId();
+        this.firstName = client.getFirstName();
+        this.lastName = client.getLastName();
+        this.email = client.getEmail();
+        this.accounts = client       //obj del tipo cliente
                 .getAccounts()  //Set de cuentas
                 .stream()       //Stream de cuentas
                 .map(account -> new AccountDTO(account)) //Stream de cuentasDTO
                 .collect(Collectors.toList());           //Lista de cuentasDTO
-        loans = client.getClientLoans().stream().map(loan-> new ClientLoanDTO(loan)).collect(Collectors.toSet());
+        this.loans =
+                client.getClientLoans().stream().map(clientLoan -> new ClientLoanDTO(clientLoan)).collect(Collectors.toList());
     }
 
     //metodos
@@ -52,7 +50,5 @@ public class ClientDTO {
         return accounts;
     }
 
-    public Set<ClientLoanDTO> getLoans() {
-        return loans;
-    }
+    public List<ClientLoanDTO> getLoans() { return loans; }
 }

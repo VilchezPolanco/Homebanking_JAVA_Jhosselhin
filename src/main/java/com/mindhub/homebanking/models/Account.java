@@ -39,47 +39,54 @@ public class Account {
 
 
     //Metodos
-    public String getNumber() {
-        return number;
-    }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
+    //@JsonIgnore
+    public Client getClient() {
+        return client;
     }
 
     public Long getId() {
         return id;
     }
 
-    @JsonIgnore  // para ignorar el get que me genera un blucle de datos
-    public Client getClient() {
-        return client;
+    public String getNumber() {
+        return number;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
 
     public void setClient(Client client) {
         this.client = client;
     }
 
-    public Set<Transaction> getTransactions() { return transactions; }
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-    public void addTransaction(Transaction transaction){
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public void addTransaction(Transaction transaction){  //método addTransaction se utiliza para agregar transacciones a la cuenta.
         transaction.setAccount(this);
-        transactions.add(transaction);
+        this.transactions.add(transaction);
     }
 }

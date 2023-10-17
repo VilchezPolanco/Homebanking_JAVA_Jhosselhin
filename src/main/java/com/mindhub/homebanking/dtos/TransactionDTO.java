@@ -17,18 +17,16 @@ public class TransactionDTO {
 
     //constructor
     public TransactionDTO(Transaction transaction){
-        id = transaction.getId();
-        type = transaction.getType();
-        amount = transaction.getAmount();
-        description = transaction.getDescription();
-        date = transaction.getDate();
+        this.id = transaction.getId();
+        this.type = transaction.getType();
+        this.amount = transaction.getAmount();
+        this.description = transaction.getDescription();
+        this.date = transaction.getDate();
     }
 
     //Metodos accesores
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
     public TransactionType getType() {
         return type;

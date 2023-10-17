@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController //controlador escucha y responde peticiones
@@ -21,17 +20,12 @@ public class AccountController {
     private AccountRepository accountRepository;
 
     @RequestMapping("/accounts")
-    public List<AccountDTO> getAccounts() {
-
-        List<Account> accounts = accountRepository.findAll();
-        return accounts.stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+    public List<AccountDTO> getAllAccounts() {
+        return accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
     }
 
-    @RequestMapping("accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id){
-
-        Optional<Account> account=accountRepository.findById(id);
-        AccountDTO accountDTO= account.map(acc -> new AccountDTO(acc)).orElse(null);
-        return accountDTO;
+    @RequestMapping("/accounts/{id}")
+    public AccountDTO getAccount(@PathVariable Long id) {
+        return accountRepository.findById(id).map(AccountDTO::new).orElse(null);
     }
 }

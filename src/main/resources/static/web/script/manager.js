@@ -11,7 +11,7 @@ createApp({
   created(){
     axios.get("http://localhost:8080/api/clients")
     .then((respuesta) =>{
-      this.clients = respuesta.data
+      this.clients = respuesta.data_embedded.clients
       console.log(this.clients);
     })
     .catch(error => console.log(error));
