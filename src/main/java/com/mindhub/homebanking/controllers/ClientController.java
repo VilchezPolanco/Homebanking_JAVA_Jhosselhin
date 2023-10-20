@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController //controlador escucha y responde peticiones
-@RequestMapping("/api")
+@RequestMapping("/api") //ruta base del controlador(relaciona peticion con endpoint)
 public class ClientController {
 
     @Autowired //injeccion de dependencias
-    private ClientRepository clientRepository;
+    private ClientRepository clientRepository;  //para poder usar los CRUD
 
     @RequestMapping("/clients")
     public List<ClientDTO> getAllClients() {

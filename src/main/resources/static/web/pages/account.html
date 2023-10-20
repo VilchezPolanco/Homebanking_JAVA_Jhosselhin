@@ -61,9 +61,7 @@
       </thead>
       <tbody>
         <tr v-for="transaction of transactions">
-            <td :class="{'debit': transaction.type == 'DEBIT', 'credit': transaction.type == 'CREDIT'}">
-                <span v-if="transaction.type == 'CREDIT'"><i class="bi bi-arrow-up-right-square-fill"></i></span>
-                <span v-else="transaction.type == 'DEBIT'"><i class="bi bi-arrow-down-left-square-fill"></i></span>
+            <td :class="{'text-danger': transaction.type == 'DEBIT', 'text-success': transaction.type == 'CREDIT'}">
                 {{ transaction.type }}
             </td>
             <td>${{ transaction.amount.toLocaleString() }}</td>

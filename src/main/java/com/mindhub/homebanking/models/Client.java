@@ -32,7 +32,6 @@ public class Client {
         this.email = email;
     }
 
-
     // Metodos o comportamientos
     public Long getId() {
         return id;
