@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/api") //ruta base del controlador(relaciona peticion con endpoint)
 public class ClientController {
 
-    @Autowired //injeccion de dependencias
+    @Autowired //injeccion un valor
     private ClientRepository clientRepository;  //para poder usar los CRUD
 
-    @RequestMapping("/clients")
+    @RequestMapping("/clients") //microprograma quer hace una peticion en especifico
     public List<ClientDTO> getAllClients() {
         return clientRepository.findAll().stream().map(client -> new ClientDTO(client)).collect(Collectors.toList());
     }

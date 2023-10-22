@@ -37,7 +37,6 @@ public class Account {
         this.balance = balance;
     }
 
-
     //Metodos
 
     //@JsonIgnore

@@ -22,13 +22,19 @@ public class HomebankingApplication {
 									  AccountRepository accountRepository,
 									  TransactionRepository transactionRepository,
 									  LoanRepository loanRepository,
-									  ClientLoanRepository clientLoanRepository ){
+									  ClientLoanRepository clientLoanRepository,
+									  CardRepository cardRepository ){
 		return args ->{
 
-			//instanciar el objeto client y el objeto account
+		//instanciar el objeto client
 			Client client = new Client("Melba", "Morel", "melba@mindhub.com");
 			clientRepository.save(client);
 
+			Client clientJhossy = new Client("Jhossy", "Vilchez", "jhossy@gmail.com");
+			clientRepository.save(clientJhossy);
+
+
+		//instanciar el objeto account
 			Account accountMelba1 = new Account("VIN001", LocalDate.now(), 5000.0);
 			client.addAccount(accountMelba1);
 			accountRepository.save(accountMelba1);
@@ -36,12 +42,6 @@ public class HomebankingApplication {
 			Account accountMelba2 = new Account("VIN002",LocalDate.now().plusDays(1),7500.0);
 			client.addAccount(accountMelba2);
 			accountRepository.save(accountMelba2);
-
-
-
-			//instanciar el objeto client y el objeto account
-			Client clientJhossy = new Client("Jhossy", "Vilchez", "jhossy@gmail.com");
-			clientRepository.save(clientJhossy);
 
 			Account accountJhossy1 = new Account("YES001", LocalDate.now(), 15000.0);
 			clientJhossy.addAccount(accountJhossy1);
@@ -51,8 +51,7 @@ public class HomebankingApplication {
 			clientJhossy.addAccount(accountJhossy2);
 			accountRepository.save(accountJhossy2);
 
-
-
+		//instanciar el objeto transaction
 			//instanciar el objeto transaction para la accountMelba1
 			Transaction transactionMelba1 = new Transaction(TransactionType.CREDIT, 5000.2, "coffe", LocalDateTime.now());
 			accountMelba1.addTransaction(transactionMelba1);
@@ -61,7 +60,6 @@ public class HomebankingApplication {
 			Transaction transactionMelba2 = new Transaction(TransactionType.DEBIT, -2000.2, "supermarket", LocalDateTime.now());
 			accountMelba1.addTransaction(transactionMelba2);
 			transactionRepository.save(transactionMelba2);
-
 
 
 			//instanciar el objeto transaction para la accountMelba2
@@ -83,7 +81,8 @@ public class HomebankingApplication {
 			accountJhossy1.addTransaction( transactionJhossy2 );
 			transactionRepository.save( transactionJhossy2 );
 
-			//instanciar el objeto transaction para la accountJhossy1
+
+			//instanciar el objeto transaction para la accountJhossy2
 			Transaction transactionJhossy3 = new Transaction(TransactionType.DEBIT, -200.5, "cinema", LocalDateTime.now());
 			accountJhossy2.addTransaction( transactionJhossy3 );
 			transactionRepository.save( transactionJhossy3 );
@@ -93,7 +92,7 @@ public class HomebankingApplication {
 			transactionRepository.save( transactionJhossy4 );
 
 
-			// Crear tipos de loans
+		// Instanciar el objeto Loan
 			Loan mortgage = new Loan("Mortgage", 500000.00, List.of(12, 24, 36, 48, 60));
 			loanRepository.save(mortgage);
 
@@ -104,7 +103,7 @@ public class HomebankingApplication {
 			loanRepository.save(car);
 
 
-			// Crear ClientLoan
+		//Instanciar el objeto ClientLoan
 			ClientLoan mortgageMelba = new ClientLoan( 400000.00, 60);
 			client.addClientLoan(mortgageMelba);
 			mortgage.addClientLoan(mortgageMelba);
@@ -126,6 +125,18 @@ public class HomebankingApplication {
 			car.addClientLoan(carClientJhossy);
 			clientLoanRepository.save(carClientJhossy);
 
+		//Instanciar el objeto Card
+			Card cardMelba1 = new Card(client.getLastName() + " " + client.getFirstName(), CardType.DEBIT, CardColor.GOLD, "2486-9575-4555-9245", "015", LocalDate.now(), LocalDate.now().plusYears(5));
+			client.addCard(cardMelba1);
+			cardRepository.save(cardMelba1);
+
+			Card cardMelba2 = new Card(client.getLastName() + " " + client.getFirstName(), CardType.CREDIT, CardColor.TITANIUM, "8564-3258-6174-6251", "085", LocalDate.now(), LocalDate.now().plusYears(5));
+			client.addCard(cardMelba2);
+			cardRepository.save(cardMelba2);
+
+			Card cardJhossy1 = new Card(clientJhossy.getLastName() + " " + clientJhossy.getFirstName(), CardType.CREDIT, CardColor.SILVER, "7543-2280-2932-1047", "150", LocalDate.now(), LocalDate.now().plusYears(5));
+			clientJhossy.addCard(cardJhossy1);
+			cardRepository.save(cardJhossy1);
 		};
 	}
 }
