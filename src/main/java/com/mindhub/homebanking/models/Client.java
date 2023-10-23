@@ -16,6 +16,8 @@ public class Client {
     private Long id;
 
     private String firstName, lastName, email;
+    private String password;
+    private Boolean admin;
 
     // ---- One to many de Client to Account
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER) //relacion muchos a uno ->(Eager) que me traiga cuenta y propietario
@@ -32,10 +34,12 @@ public class Client {
     // Constructores
     public Client() {
     }
-    public Client(String firstName, String lastName, String email) {
+    public Client(String firstName, String lastName, String email, String password, Boolean admin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
+        this.admin = admin;
     }
 
     // Metodos o comportamientos
@@ -66,6 +70,14 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
+
+    public Boolean getAdmin() { return admin; }
+
+    public void setAdmin(Boolean admin) { this.admin = admin; }
 
     // metodos accesores de las propiedades relacionales
 

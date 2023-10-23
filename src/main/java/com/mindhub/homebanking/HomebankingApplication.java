@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +19,8 @@ public class HomebankingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
+	@Autowired
+	private PasswordEncoder passwordEnconder;
 	@Bean
 	public CommandLineRunner initData( ClientRepository clientRepository,
 									  AccountRepository accountRepository,
@@ -27,11 +31,14 @@ public class HomebankingApplication {
 		return args ->{
 
 		//instanciar el objeto client
-			Client client = new Client("Melba", "Morel", "melba@mindhub.com");
+			Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEnconder.encode("client"), false);
 			clientRepository.save(client);
 
-			Client clientJhossy = new Client("Jhossy", "Vilchez", "jhossy@gmail.com");
+			Client clientJhossy = new Client("Jhossy", "Vilchez", "jhossy@gmail.com", passwordEnconder.encode("clientJhossy"), false);
 			clientRepository.save(clientJhossy);
+
+			Client admin = new Client("Admin", "Admin", "admin@mail.com", passwordEnconder.encode("admin"),true );
+			clientRepository.save(admin);
 
 
 		//instanciar el objeto account
