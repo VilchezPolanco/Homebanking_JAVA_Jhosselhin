@@ -9,7 +9,7 @@ const { createApp } = Vue
       }
     },
     created(){
-        axios("http://localhost:8080/api/clients/1")
+        axios("http://localhost:8080/api/clients/currents")
         .then(response => {
             this.clients = response.data;
             console.log(this.clients.cards)
@@ -21,6 +21,13 @@ const { createApp } = Vue
         .catch(err => console.log(err))
     },
     methods:{
+        logOut() {
+          axios.post("/api/logout").then((response) => {
+            console.log("Signed out");
+            location.pathname = "/web/index.html"; // Redirige al usuario a la página de inicio.
+          });
+        },
+
         formatDate(date) {
             return new Date(date).toLocaleString('en-US', { month: '2-digit', year: '2-digit' });
         }

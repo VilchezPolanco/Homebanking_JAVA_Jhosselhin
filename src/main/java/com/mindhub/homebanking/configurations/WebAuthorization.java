@@ -22,7 +22,7 @@ public class WebAuthorization {
         http.authorizeRequests() // Autoriza peticiones
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 .antMatchers("/web/index.html", "/web/pages/login.html", "/web/register.html",
-                        "/web/styles/**", "/web/js/**", "/web/img/**", "/api/clients/currents").permitAll()
+                        "/web/styles/**", "/web/script/**", "/api/clients/currents").permitAll()
                 .antMatchers("/h2-console/**", "/rest/", "/web/pages/manager.html").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
                 .antMatchers("/api/logout/").authenticated()

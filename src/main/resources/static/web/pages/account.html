@@ -29,16 +29,14 @@
                       <a class="nav-link" href="pagina3.html">Loans</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="cerrar-sesion.html">
-                          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                      </a>
+                    <a @click="logOut" class="nav-link" href="#">Logout</a>
                   </li>
               </ul>
           </div>
       </div>
     </nav>
   </header>
-  <main id="app" class="container mt-4" style="min-height: 85vh;">
+  <main class="container mt-4" style="min-height: 85vh;">
     <h2 class="mx-5 my-4">Account transaction: {{ account.number}} <i class="bi-credit-card biSize"></i></h2>
     <div class="row justify-content-center">
           <div class="card mb-4 bg-light">

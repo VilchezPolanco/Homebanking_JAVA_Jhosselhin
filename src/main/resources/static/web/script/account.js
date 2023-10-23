@@ -6,6 +6,14 @@ data() {
       transactions: [],
     };
   },
+  methods: {
+    logOut() {
+      axios.post("/api/logout").then((response) => {
+        console.log("Signed out");
+        location.pathname = "/web/index.html"; // Redirige al usuario a la página de inicio.
+      });
+    },
+  },
   created() {
     const params = new URLSearchParams(location.search) /*te deja usar los metodos de location */    
     const idParam = params.get("id") /* uno de los metodos get para capturar el id*/
