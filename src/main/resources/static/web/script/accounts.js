@@ -7,7 +7,7 @@ createApp({
     };
   },
   created() {
-    axios.get("http://localhost:8080/api/clients/1")
+    axios.get("http://localhost:8080/api/clients/current")
       .then((response) => {
         this.clients = response.data;
         console.log(this.clients);
@@ -17,7 +17,14 @@ createApp({
         console.error(error);
       });
   },
+
   methods: {
+    createAccount(){
+      axios.post("/api/clients/current/accounts")
+      .then((response) => {
+        location.pathname = "/web/pages/accounts.html"
+      })
+    },
     logOut() {
       axios.post("/api/logout").then((response) => {
         console.log("Signed out");

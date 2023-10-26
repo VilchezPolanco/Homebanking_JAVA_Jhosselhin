@@ -9,7 +9,7 @@ const { createApp } = Vue
       }
     },
     created(){
-        axios("http://localhost:8080/api/clients/currents")
+        axios("http://localhost:8080/api/clients/current")
         .then(response => {
             this.clients = response.data;
             console.log(this.clients.cards)

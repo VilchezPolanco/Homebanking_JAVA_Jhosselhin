@@ -10,7 +10,8 @@ import java.util.Set;
 
 
 @Entity
-public class Loan {
+public class
+Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
