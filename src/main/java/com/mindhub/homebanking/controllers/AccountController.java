@@ -53,7 +53,7 @@ public class AccountController {
             client.addAccount(account);
             clientRepository.save(client);
 
-            return new ResponseEntity<>("Client created successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>("Accounts created successfully", HttpStatus.CREATED);
         }
     }
 

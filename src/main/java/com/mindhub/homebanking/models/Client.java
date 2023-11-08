@@ -114,4 +114,19 @@ public class Client {
         card.setClient(this);
         this.cards.add(card);
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", admin=" + admin +
+                ", accounts=" + accounts +
+                ", clientLoans=" + clientLoans +
+                ", cards=" + cards +
+                '}';
+    }
 }

@@ -11,62 +11,57 @@
 </head>
 
 <body>
-  <header class="bg-dark text-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/013/948/616/small/bank-icon-logo-design-vector.jpg"
-            alt="Logo" width="40" height="40">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="./accounts.html">Accounts</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./cards.html">Cards</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pagina3.html">Loans</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./pages/login.html">
-                <i class="bi bi-box-arrow-right"></i>
-                Login
-              </a>
-            </li>
-          </ul>
+  <!-- Encabezado (Header) -->
+  <header class="bg-primary text-white text-center py-4">
+    <h1>Bank MindHub Brothers!</h1>
+    <p>Your trusted bank</p>
+    <a href="./pages/login.html" class="btn btn-light">Login</a>
+</header>
+
+<!-- Sección de Publicidad 1 -->
+<section class="container my-5">
+    <h2 class="text-center">Special offers</h2>
+    <div class="row">
+        <!-- Coloca aquí contenido publicitario -->
+        <div class="d-flex flex-row col-md-12">
+          <div class="card m-2 ">
+            <img src="https://img.freepik.com/vector-gratis/historias-instagram-concepto-banco-degradado_23-2149740739.jpg?w=996&t=st=1698963082~exp=1698963682~hmac=b600b9bd4a245c0208bb5c1a604c0bb46fa1050b4ce51705c3c58df760a502e1" alt="imagen de banco">
+              <div class="card-body">
+                  <p class="card-text">Take advantage of our special credit card offer!</p>
+              </div>
+          </div>
+          <div class="card m-2">
+            <img src="https://img.freepik.com/vector-gratis/plantilla-portada-redes-sociales-banca-finanzas_23-2149720429.jpg?w=996&t=st=1698963171~exp=1698963771~hmac=62db943ea8edbdc75f0b6752eb390c715393b4285573f1fd882f0d36f16cf982" class="card-img-top" alt="Publicidad 1">
+            <div class="card-body"> 
+                  <p class="card-text">Take advantage of our special credit card offer!</p>
+              </div>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
-  <main style="height: 28rem;">
-    <h1>index</h1>
-  </main>
-  <footer class="bg-dark text-light py-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <p>&copy; 2023 - All rights reserved</p>
-        </div>
-        <div class="col-md-6">
-          <ul class="list-unstyled list-inline text-md-end">
-            <li class="list-inline-item"><a href="https://www.instagram.com/"
-                class="text-light text-decoration-none">Instagram</a></li>
-            <li class="list-inline-item"><a href="https://www.facebook.com/"
-                class="text-light text-decoration-none">Facebook</a></li>
-            <li class="list-inline-item"><a href="https://api.whatsapp.com/send?phone=TUNUMERO&text=TUMENSAJE"
-                class="text-light text-decoration-none">WhatsApp</a></li>
-          </ul>
-        </div>
-      </div>
     </div>
-  </footer>
+</section>
+<!-- Sección Principal (Main) -->
+<main class="container my-5">
+    <h2 class="text-center">Welcome to MindHub Brothers Bank!</h2>
+    <p class="text-center">Discover our financial services and products.</p>
+    <!-- Aquí puedes agregar contenido principal adicional -->
+    <div class="row">
+      <div class="col-md-6">
+          <h3>Our history</h3>
+          <p>
+            Our Bank, also known as MindHub Brothers Bank, was founded in 1995 with the vision of providing high-quality financial services to our customers.</p>
+          <p>
+            Since then, we have grown and evolved to become a renowned bank, offering a wide range of financial products and solutions to meet the needs of individuals and businesses.</p>
+        </div>
+        <div class="col-md-6">
+        <img src="https://img.freepik.com/vector-gratis/plantilla-publicacion-redes-sociales-banca-plana_23-2149811848.jpg?size=626&ext=jpg&ga=GA1.1.923789691.1697503492&semt=ais" class="card-img-top" alt="Publicidad 1">
+      </div>
+  </div>
+</main>
+
+<!-- Pie de Página (Footer) -->
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2023 MindHub Brothers Bank. All rights reserved.</p>
+</footer>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -74,5 +69,4 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="./script/main.js"></script>
 </body>
-
 </html>

@@ -15,7 +15,7 @@ Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private Long ID;
+    private Long id;
     private String name;
     private double maxAmount;
     @ElementCollection
@@ -34,9 +34,7 @@ Loan {
 
     // metodos
 
-    public Long getID() {
-        return ID;
-    }
+    public Long getId() { return id; }
 
     @JsonIgnore
     public Set<ClientLoan> getClientLoans() {
@@ -46,7 +44,6 @@ Loan {
     public void setClientLoans(Set<ClientLoan> clientLoans) {
         this.clientLoans = clientLoans;
     }
-
 
     public String getName() {
         return name;

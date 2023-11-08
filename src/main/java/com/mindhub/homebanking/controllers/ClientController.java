@@ -48,7 +48,7 @@ public class ClientController {
             @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) {
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN); //403 pr
         }
 
         if (clientRepository.findByEmail(email) != null) {

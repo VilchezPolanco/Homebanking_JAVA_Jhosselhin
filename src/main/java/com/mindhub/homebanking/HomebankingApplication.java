@@ -33,7 +33,7 @@ public class HomebankingApplication {
 		//instanciar el objeto client
 			Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEnconder.encode("client"), false);
 			clientRepository.save(client);
-
+			System.out.println(client);
 			Client clientJhossy = new Client("Jhossy", "Vilchez", "jhossy@gmail.com", passwordEnconder.encode("clientJhossy"), false);
 			clientRepository.save(clientJhossy);
 

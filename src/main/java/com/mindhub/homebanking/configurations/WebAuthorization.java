@@ -20,13 +20,13 @@ public class WebAuthorization {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests() // Autoriza peticiones
-                .antMatchers(HttpMethod.POST, "/api/clients", "/api/clients").permitAll()
-                .antMatchers("/web/index.html", "/web/pages/login.html", "/web/style/**", "/web/script/**").permitAll()
-                .antMatchers("/h2-console/**", "/rest/", "/web/pages/manager.html").hasAuthority("ADMIN")
-                /*.antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN");*/
-                .antMatchers(HttpMethod.GET, "/web/pages/accounts.html").authenticated();
-                /*.antMatchers(HttpMethod.GET, "/api/clients", "/api/clients/current","/api/clients/{id}").hasAuthority("CLIENT");*/
-
+                .antMatchers(HttpMethod.POST, "/api/clients","/api/login").permitAll()
+                .antMatchers("/web/index.html", "/web/pages/login.html", "/web/script/**").permitAll()
+                .antMatchers("/h2-console/**", "/rest/**", "/web/pages/manager.html").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN")
+                .antMatchers("/web/pages/**", "/api/clients/current/**").hasAuthority("ADMIN")
+                .antMatchers("/web/pages/**", "/api/clients/current/**").hasAuthority("CLIENT");
+                /*.anyRequest().denyAll();*/
 
 
         http.formLogin()
@@ -38,12 +38,13 @@ public class WebAuthorization {
                 .loginPage("/api/login");
 
 
+
+
         http.logout().logoutUrl("/api/logout");
 
         // turn off checking for CSRF tokens
 
         http.csrf().disable();
-
 
         //disabling frameOptions so h2-console can be accessed
 

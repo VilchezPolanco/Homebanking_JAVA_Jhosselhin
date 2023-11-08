@@ -14,7 +14,7 @@ public class ClientLoanDTO {
 
     public ClientLoanDTO(ClientLoan clientLoan) {
         this.ID = clientLoan.getID(); // Obtener el ID del préstamo del cliente
-        this.loanId = clientLoan.getLoan().getID(); // Obtener el ID del préstamo asociado
+        this.loanId = clientLoan.getLoan().getId(); // Obtener el ID del préstamo asociado
         this.loanName = clientLoan.getLoan().getName(); // Obtener el nombre del préstamo
         this.amount = clientLoan.getAmount(); // Obtener el monto del préstamo
         this.payments = clientLoan.getPayments(); // Obtener la cantidad de pagos del préstamo

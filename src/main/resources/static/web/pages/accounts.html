@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <button @click="createAccount()">create account</button>
+    <button class="btn btn-primary px-5 d-block mx-auto" @click="createAccount()">create account</button>
 
     <div class="mt-4 text text-center">
         <h4 class="p-2">Loans</h4>
@@ -79,6 +79,7 @@
             <h2>${{clients.name}} does not have loans</h2>
         </div>
     </div>
+    <button><a class="btn btn-success" href="/web/pages/loan-application.html">Request Loan</a></button>
     <!-- Carousel -->
     <div id="carouselExample" class="carousel slide mt-4 mb-2" data-bs-ride="carousel">
       <div class="carousel-inner">

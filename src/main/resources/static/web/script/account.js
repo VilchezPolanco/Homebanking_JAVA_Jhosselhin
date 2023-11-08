@@ -4,6 +4,8 @@ data() {
     return {
       account: [],
       transactions: [],
+      date: "",
+      hour: ""
     };
   },
   methods: {
@@ -26,6 +28,10 @@ data() {
         this.transactions = response.data.transactions;
         /* this.transactions.sort((a, b) => b.id - a.id); */
         console.log(this.transactions);
+        this.date = this.transactions[0].date.slice(0, 10);
+        console.log(this.date)
+        this.hour = this.transactions[0].date.slice(11, 16);
+        console.log(this.hours);
       })
       .catch((error) => {
         console.log(error);

@@ -54,6 +54,7 @@
             <th scope="col">Type</th>
             <th scope="col">Amount</th>
             <th scope="col">Date</th>
+            <th scope="col">Hour</th>
             <th scope="col">Description</th>
         </tr>
       </thead>
@@ -63,7 +64,8 @@
                 {{ transaction.type }}
             </td>
             <td>${{ transaction.amount.toLocaleString() }}</td>
-            <td>{{ transaction.date }}</td>
+            <td>{{ date}}</td>
+            <td>{{ hour}}</td>
             <td>{{ transaction.description }}</td>
         </tr>
       </tbody>
