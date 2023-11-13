@@ -25,10 +25,13 @@
                             <a class="nav-link" href="./accounts.html">Accounts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cards</a>
+                            <a class="nav-link" href="./cards.html">Cards</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./tranfer.html">Trasfer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./loan-application.html">Loan</a>
                         </li>
                         <li class="nav-item">
                             <a @click="logOut" class="nav-link" href="#">Logout</a>
@@ -38,7 +41,41 @@
         </nav>
     </header>
     <main>
-        
+        <div class="container mt-4">
+            {{messageError}}
+            <h2 class="text-center">Loan Form</h2>
+    
+            <div class="form-group">
+                <label for="loanType">Select the type of loan</label>
+                <select class="form-control" id="loanType" name="loanType" v-model="loanId">
+                    <option :value="loan.id" v-for="loan in loans">{{loan.name}}(Max Amount: ${{loan.maxAmount}})</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <h2>Select the number of payments</h2>
+                <div class="form-check" v-for="payment in loans.find(loan => loan.id===loanId).payments" v-if="loanId">
+                    <input class="form-check-input" type="radio" name="paymentOption" id="paymentOption1" :value="payment" v-model="payments">
+                    <label class="form-check-label" for="paymentOption1">{{payment}}</label>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label for="loanAmount">Select the Loan Amount</label>
+                <input type="number" class="form-control" id="loanAmount" name="loanAmount" v-model="amount">
+            </div>
+                <div class="form-group">
+                    <label for="destinationAccount">Select your destination account</label>
+                    <select class="form-control" id="destinationAccount" name="destinationAccount" v-model="destinationAccount">
+                        <option v-for="account of accounts" :value="account.number">{{account.number}}</option>
+                    </select>
+                </div>
+            
+            <div v-if="loanId && amount && payments">
+                <h3> a pagar en {{payments}} cuotas de $ {{ (amount*1.20)/payments}}</h3>
+            </div>
+            <button type="button" @click.prevent="newLoan()">Comfirm Loan</button>
+        </div>
     </main>
     <footer class="bg-dark text-light p-4 " style="min-height: 6rem;">
         <div class="row">
@@ -57,8 +94,9 @@
                 </ul>
             </div>
         </div>
-</footer>
+    </footer>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="../script/loan-application.js"></script>
 </body>

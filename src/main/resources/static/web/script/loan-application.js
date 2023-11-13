@@ -2,7 +2,12 @@ const app = Vue.createApp({
     data() {
         return {
             loans: [],
-            accounts: {}
+            accounts: {},
+            loanId: 0,
+            amount: 0,
+            payments: 0,
+            destinationAccount: "",
+            messageError: "",
         };
     },
 
@@ -12,7 +17,7 @@ const app = Vue.createApp({
         this.loans = response.data
         console.log(this.loans);
         })
-        .catch(error => console.log(error))
+        .catch(error => this.messageError = error.response.data)
 
         axios.get("/api/clients/current/accounts")
             .then(response => {
@@ -23,15 +28,22 @@ const app = Vue.createApp({
                 console.log(error);
             });
     },
-    method:{
+    methods:{
+        newLoan(){
+            axios.post("/api/loans", {"id":`${this.loanId}`,"amount":`${this.amount}`,"payments":`${this.payments}`,"destinationAccount":`${this.destinationAccount}`})
+            .then(response=>{
+                Swal.fire("successful loan!")
+                .then(()=> location.pathname = "/web/pages/loan-application.html")
+            })
+            .catch(error => this.messageError = error.response.data)
+            },
 
+        logOut() {
+            axios.post("/api/logout").then((response) => {
+              console.log("Signed out");
+              location.pathname = "/web/index.html"; // Redirige al usuario a la página de inicio.
+            });
+        }
     },
-    logOut() {
-        axios.post("/api/logout").then((response) => {
-          console.log("Signed out");
-          location.pathname = "/web/index.html"; // Redirige al usuario a la página de inicio.
-        });
-    }
-
 })
 app.mount('#app');

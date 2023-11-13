@@ -21,7 +21,7 @@ public class HomebankingApplication {
 	}
 	@Autowired
 	private PasswordEncoder passwordEnconder;
-	@Bean
+	/*@Bean
 	public CommandLineRunner initData( ClientRepository clientRepository,
 									  AccountRepository accountRepository,
 									  TransactionRepository transactionRepository,
@@ -145,7 +145,7 @@ public class HomebankingApplication {
 			clientJhossy.addCard(cardJhossy1);
 			cardRepository.save(cardJhossy1);
 		};
-	}
+	}*/
 }
 
 
