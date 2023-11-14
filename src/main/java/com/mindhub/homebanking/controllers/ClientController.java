@@ -6,6 +6,8 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.service.AccountService;
+import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
@@ -22,25 +24,30 @@ import java.util.stream.Collectors;
 @RestController // Controlador bajo los parametros de REST(HTTP)/ le digo que esta clase va hacer el controlador.
 @RequestMapping("/api") //ruta base del controlador(relaciona peticion con endpoint)
 public class ClientController {
-
-    @Autowired //injeccion un valor
-    private ClientRepository clientRepository;  //para poder usar los CRUD
     @Autowired
-    private AccountRepository accountRepository;
+    private ClientService clientService;
+    @Autowired
+    private AccountService accountService;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/clients") // Servlest / microprograma quer hace una peticion en especifico
     public List<ClientDTO> getAllClients() {
-        return clientRepository.findAll().stream().map(client -> new ClientDTO(client)).collect(Collectors.toList());
+        return clientService.findAllClients().stream().map(client -> new ClientDTO(client)).collect(Collectors.toList());
     }
 
-    @GetMapping("/clients/{id}")
+    /*@GetMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id) {
         return clientRepository.findById(id)
                 .map(ClientDTO::new) // Convierte el cliente a un DTO
                 .orElse(null); // Si no se encuentra, retorna null
+    }*/
+    @RequestMapping("/clients/{id}")
+    public ClientDTO getClient(@PathVariable Long id){
+        ClientDTO client = new ClientDTO(clientService.findClientById(id));
+        return client;
     }
 
     @PostMapping("/clients")
@@ -51,25 +58,25 @@ public class ClientController {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN); //403 pr
         }
 
-        if (clientRepository.findByEmail(email) != null) {
+        if (clientService.findClientByEmail(email) != null) {
             return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
         }
 
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), false);
         Account account = new Account(generateNumber(1, 100000000), LocalDate.now(), 0.00);
-        accountRepository.save(account);
+        accountService.saveAccount(account);
         client.addAccount(account);
-        clientRepository.save(client);
+        clientService.saveClient(client);
 
         return new ResponseEntity<>("Client created successfully", HttpStatus.CREATED);
     }
     @RequestMapping("/clients/current")
     public ClientDTO getClientCurrent(Authentication authentication) {
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+        return new ClientDTO(clientService.findClientByEmail(authentication.getName()));
     }
 
     public String generateNumber(int min, int max){
-        List<AccountDTO> accounts = accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        List<AccountDTO> accounts = accountService.findAllAccount().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
         Set<String> numberAccount = accounts.stream().map(account -> account.getNumber()).collect(Collectors.toSet());
 
         String aux = "VIN";

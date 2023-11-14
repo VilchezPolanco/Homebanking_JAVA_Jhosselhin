@@ -7,6 +7,8 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.service.AccountService;
+import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,25 +25,41 @@ import java.util.stream.Collectors;
 @RestController //controlador escucha y responde peticiones
 @RequestMapping("/api")
 public class AccountController {
-
     @Autowired //injeccion de dependencias
+    private AccountService accountService;
+
+    @Autowired
+    private ClientService clientService;
+    /*@Autowired
     private AccountRepository accountRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientRepository clientRepository;*/
 
     @GetMapping("/accounts")
     public List<AccountDTO> getAllAccounts() {
-        return accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        return accountService.findAllAccount().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
     }
 
-    @GetMapping("/accounts/{id}")
+    @RequestMapping("/accounts/{id}")
+    public ResponseEntity<Object> getAccount(@PathVariable Long id) {
+
+        Account account = accountService.findAccountById(id);
+
+        if (account == null) {
+            return new ResponseEntity<>("Account not found.", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(new AccountDTO(account), HttpStatus.OK);
+
+    }
+    /*@GetMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id) {
         return accountRepository.findById(id).map(AccountDTO::new).orElse(null);
-    }
+    }*/
 
     @GetMapping("/clients/current/accounts")
     public List<AccountDTO> getAccountClientCurrent(Authentication authentication) {
-        return clientRepository.findByEmail(authentication.getName())
+        return clientService.findClientByEmail(authentication.getName()) //del serviceClient
                 .getAccounts()
                 .stream()
                 .map(account -> new AccountDTO(account))
@@ -50,7 +68,7 @@ public class AccountController {
 
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> createAccount(Authentication authentication) {
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findClientByEmail(authentication.getName());  //del serviceclient
 
         if (client == null) {
             throw new UsernameNotFoundException("unknow client" + authentication.getName());
@@ -59,9 +77,9 @@ public class AccountController {
            return new ResponseEntity<>("Exede limite de cuentas", HttpStatus.FORBIDDEN);
         }else {
             Account account = new Account(generateNumber(1, 100000000), LocalDate.now(), 0.00);
-            accountRepository.save(account);
+            accountService.saveAccount(account);
             client.addAccount(account);
-            clientRepository.save(client);
+            clientService.saveClient(client);
 
             return new ResponseEntity<>("Accounts created successfully", HttpStatus.CREATED);
         }

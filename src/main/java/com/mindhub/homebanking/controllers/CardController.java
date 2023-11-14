@@ -9,6 +9,8 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.service.CardService;
+import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,24 +29,23 @@ import java.util.stream.Collectors;
 @RestController //controlador escucha y responde peticiones
 @RequestMapping("/api")
 public class CardController {
-
-    @Autowired //injeccion de dependencias
-    private CardRepository cardRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
+    @Autowired
+    private CardService cardService;
 
     @PostMapping("/clients/current/card")
     public ResponseEntity<Object> CreateCard(Authentication authentication, @RequestParam CardType type, @RequestParam CardColor color){
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findClientByEmail(authentication.getName());
 
         if (client == null) {
             throw new UsernameNotFoundException("unknow client" + authentication.getName());
         }
         if (client.getCards().stream().filter(card -> card.getType() == type).count() < 3){
             Card card = new Card((client.getLastName() + " " + client.getFirstName()), type, color, (generateNumber(1, 10000) + " " + generateNumber(1, 10000) + " " + generateNumber(1, 10000) + " " + generateNumber(1, 10000)), generateCvv(1, 1000), LocalDate.now(), LocalDate.now().plusYears(5));
-            cardRepository.save(card);
+            cardService.saveCard(card);
             client.addCard(card);
-            clientRepository.save(client);
+            clientService.saveClient(client);
 
             return new ResponseEntity<>("Client card successfully", HttpStatus.CREATED);
         }else{
@@ -53,7 +54,7 @@ public class CardController {
     }
 
     public String generateNumber(int min, int max){
-        List<CardDTO> cards = cardRepository.findAll().stream().map(card -> new CardDTO(card)).collect(Collectors.toList());
+        List<CardDTO> cards = cardService.findAllCard().stream().map(card -> new CardDTO(card)).collect(Collectors.toList());
         Set<String> numberCard = cards.stream().map(card -> card.getNumber()).collect(Collectors.toSet());
 
         String aux = "VIN";
@@ -68,7 +69,7 @@ public class CardController {
     }
 
     public String generateCvv(int min, int max){
-        List<CardDTO> cards = cardRepository.findAll().stream().map(card -> new CardDTO(card)).collect(Collectors.toList());
+        List<CardDTO> cards = cardService.findAllCard().stream().map(card -> new CardDTO(card)).collect(Collectors.toList());
         Set<String> numberCard = cards.stream().map(card -> card.getNumber()).collect(Collectors.toSet());
 
         String aux = "VIN";

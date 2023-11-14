@@ -4,6 +4,9 @@ import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.service.AccountService;
+import com.mindhub.homebanking.service.ClientService;
+import com.mindhub.homebanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +24,13 @@ import java.time.LocalDateTime;
 @RequestMapping("/api")
 public class TransactionsController {
     @Autowired
-    private TransactionRepository TransactionRepository;
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private ClientRepository clientRepository;
+    private AccountService accountService;
 
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private TransactionService transactionService;
 
 
     @Transactional
@@ -36,9 +40,9 @@ public class TransactionsController {
                                                     @RequestParam String description,
                                                     @RequestParam String originNumber,
                                                     @RequestParam String destinationNumber) {
-        Client client = clientRepository.findByEmail(authentication.getName());
-        Account accountDebit = accountRepository.findByNumber(originNumber);
-        Account accountCredit = accountRepository.findByNumber(destinationNumber);
+        Client client = clientService.findClientByEmail(authentication.getName());
+        Account accountDebit = accountService.findAccountByNumber(originNumber);
+        Account accountCredit = accountService.findAccountByNumber(destinationNumber);
         if (client == null) {
             throw new UsernameNotFoundException("Unknow client " + authentication.getName());
         }
@@ -73,9 +77,9 @@ public class TransactionsController {
                     accountCredit.getNumber() + description,
                     LocalDateTime.now());
 
-            TransactionRepository.save(transactionDebit);
+            transactionService.saveTransaction(transactionDebit);
             accountDebit.addTransaction(transactionDebit);
-            TransactionRepository.save(transactionCredit);
+            transactionService.saveTransaction(transactionCredit);
             accountCredit.addTransaction(transactionCredit);
 
             accountDebit.setBalance(accountDebit.getBalance() - amount);
